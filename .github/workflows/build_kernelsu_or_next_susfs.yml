@@ -90,6 +90,31 @@ jobs:
            sed -i '$s|echo "\$res"|echo "-${{ github.event.inputs.KERNEL_NAME }}"|' kernel_platform/common/scripts/setlocalversion
          fi
          
+      - name: Apply LXC/Docker Kernel Configurations
+        run: |
+          # 定位到defconfig文件路径（根据实际路径调整）
+          DEFCONFIG_PATH="kernel_workspace/kernel_platform/msm-kernel/arch/arm64/configs/vendor/pineapple_GKI.config"
+          
+          # 追加必要的配置选项
+          echo "CONFIG_NAMESPACES=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_CGROUPS=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_CGROUP_DEVICE=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_CGROUP_CPUACCT=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_CGROUP_PERF=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_VETH=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_BRIDGE=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_BRIDGE_NETFILTER=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_NETFILTER_XT_MATCH_IPVS=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_IP_NF_FILTER=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_IP_NF_TARGET_MASQUERADE=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_NETFILTER_XT_MATCH_ADDRTYPE=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_OVERLAY_FS=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_CFS_BANDWIDTH=y" >> $DEFCONFIG_PATH
+          echo "CONFIG_FAIR_GROUP_SCHED=y" >> $DEFCONFIG_PATH
+          
+          # 可选：验证修改
+          grep "CONFIG_NAMESPACES" $DEFCONFIG_PATH || echo "⚠️ Config添加失败！"
+         
       - name: Set up KernelSU-Next
         if: github.event.inputs.IF_KSU_OR_NEXT_OR_NONE == 'ksu-next'
         run: |
