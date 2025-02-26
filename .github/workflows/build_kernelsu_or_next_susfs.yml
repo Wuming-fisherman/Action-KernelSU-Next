@@ -59,6 +59,13 @@ jobs:
          git config --global user.name "build"
          git config --global user.email "3436378798@qq.com"
 
+      - name: Add Swap Space
+        run: |
+         sudo fallocate -l 5G /swapfile
+         sudo chmod 600 /swapfile
+         sudo mkswap /swapfile
+         sudo swapon /swapfile
+
       - name: Install dependencies
         run: |
          sudo apt update && sudo apt upgrade -y
