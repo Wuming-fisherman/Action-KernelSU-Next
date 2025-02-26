@@ -93,7 +93,7 @@ jobs:
       - name: Apply LXC/Docker Kernel Configurations
         run: |
           # 定位到defconfig文件路径（根据实际路径调整）
-          DEFCONFIG_PATH="kernel_workspace/kernel_platform/msm-kernel/arch/arm64/configs/vendor/pineapple_GKI.config"
+          DEFCONFIG_PATH="kernel_workspace/kernel_platform/msm-kernel/arch/arm64/configs/gki_defconfig"
           
           # 追加必要的配置选项
           echo "CONFIG_NAMESPACES=y" >> $DEFCONFIG_PATH
