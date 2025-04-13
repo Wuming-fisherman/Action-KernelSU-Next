@@ -152,10 +152,11 @@ jobs:
       - name: Build kernel
         run: |
          cd kernel_workspace
-         git clone https://github.com/lengxiaohua123/gki-lxc
+         git clone https://github.com/Wuming-fisherman/gki-lxc/
          cp gki-lxc/gki_defconfig kernel_platform/common/arch/arm64/configs
          cd kernel_platform/common
          git apply ../../gki-lxc/*.patch
+         cd ..
          export LTO=thin
          #./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ github.event.inputs.CPUD }} gki
          ./kernel_platform/build_with_bazel.py \
