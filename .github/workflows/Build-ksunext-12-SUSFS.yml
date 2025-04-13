@@ -152,10 +152,10 @@ jobs:
       - name: Build kernel
         run: |
          cd kernel_workspace
-         git clone https://github.com/Wuming-fisherman/gki-lxc/
-         cp gki-lxc/gki_defconfig kernel_platform/common/arch/arm64/configs
+         git clone https://github.com/Wuming-fisherman/GKI-Custom
+         cp ./GKI-Custom/config/gki_defconfig ./kernel_platform/common/arch/arm64/configs/gki_defconfig
          cd kernel_platform/common
-         git apply ../../gki-lxc/*.patch
+         git apply ../../GKI-Custom/*.patch
          cd ..
          export LTO=thin
          #./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ github.event.inputs.CPUD }} gki
